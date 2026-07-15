@@ -14,13 +14,6 @@ public class ProductRepository : IProductRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Product>> GetAllAsync()
-    {
-        return await _context.Products
-            .Include(p => p.Category)
-            .ToListAsync();
-    }
-
     public async Task<Product?> GetByIdAsync(int id)
     {
         return await _context.Products
@@ -44,5 +37,12 @@ public class ProductRepository : IProductRepository
     {
         _context.Products.Remove(product);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<Product>> GetAllAsync()
+    {
+        return await _context.Products
+            .Include(p => p.Category)
+            .ToListAsync();
     }
 }
